@@ -8,17 +8,14 @@ public class MyJDBCConnection {
 
     private static MyJDBCConnection instance;
 
-    private static Connection connection = null;
     private static Statement stmt = null;
 
-
-    private static String insert = "INSERT example(name) VALUES(?)";
-
 //    I made the constructor private to use singleton design pattern
+//    JDBC is made through constructor
 
     private MyJDBCConnection() {
         try {
-            connection = DriverManager.getConnection(URL, USER, PASSWORD);
+            Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
             stmt = connection.createStatement();
             System.out.println("Connection succeeds to port: " + URL + "\n");
         } catch (SQLException e) {
@@ -26,12 +23,14 @@ public class MyJDBCConnection {
         }
     }
 
+//    Method for creating tables
+
     public void createTable(String tableName, String... values) {
         try {
 
-            String myData = "";
-            for (int i = 0; i < values.length; i++) {
-                myData += values[i] + ", ";
+            StringBuilder myData = new StringBuilder();
+            for (String value : values) {
+                myData.append(value).append(", ");
             }
 
             String sql = "CREATE TABLE IF NOT EXISTS " + tableName + "(" +
@@ -47,6 +46,8 @@ public class MyJDBCConnection {
         }
     }
 
+//    Method for dropping tables
+
     public void dropTableExample(String tableName) {
         try {
             stmt.executeUpdate("DROP TABLE " + tableName + ";");
@@ -55,6 +56,8 @@ public class MyJDBCConnection {
             e.printStackTrace();
         }
     }
+
+//    Method for inserting data into tables
 
     public void insertIntoTable(String myTableName, String[] dates, String... values) {
         try {
@@ -79,23 +82,27 @@ public class MyJDBCConnection {
 
             stmt.executeUpdate("INSERT " + myTableName + "(" + myDates + ") VALUES (" + myValues + ");");
 
-            System.out.println("INSERT INTO " + myTableName + "(" + myDates + ")" + " VALUES('" + myValues + "')");
+            System.out.println("INSERT INTO " + myTableName + "(" + myDates + ")" + " VALUES(" + myValues + "')");
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    public <T> void updateTableExample(int id, String columnName, T newValue) {
+    //    Method for updating tables
+    public void updateTableExample(String tableName, int id, String columnName, String newValue) {
         try {
-            String sql = "UPDATE example SET " + columnName + " = '" + newValue + "'" + " WHERE id = " + id;
+            String sql = "UPDATE " + tableName + " SET " + columnName + " = '" + newValue + "'" + " WHERE id = " + id;
 
             stmt.executeUpdate(sql);
 
-            System.out.println(columnName + " updated to: " + newValue);
+            System.out.println(columnName.substring(0, 1).toUpperCase() + columnName.substring(1) +
+                    " updated to: " + newValue + ", from " + tableName + " where id = " + id);
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+
+//    Method for deleting data from the given table, by its ID
 
     public void deleteFromTableExample(String tableName, int id) {
         try {
@@ -106,14 +113,14 @@ public class MyJDBCConnection {
         }
     }
 
+//    Method for selecting ids and names from the given table
+
     public void selectIdsAndNamesFromTable(String tableName) {
 
         try {
 
-
             ResultSet rs = stmt.executeQuery("SELECT id, name" + " FROM " + tableName + ";");
             while (rs.next()) {
-
 
                 int id = rs.getInt("id");
                 String name = rs.getString("name");
@@ -123,7 +130,6 @@ public class MyJDBCConnection {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
 
 //    I created a public method to return an instance of the class, using singleton design pattern
