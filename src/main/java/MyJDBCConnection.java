@@ -18,7 +18,7 @@ public class MyJDBCConnection {
         try {
             Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
             stmt = connection.createStatement();
-            System.out.println(Colors.GREEN.getColor() + "Connection succeeds on port: " + URL + Colors.RESET.getColor() + "\n");
+            System.out.println(Colors.GREEN_BOLD.getColor() + "Connection succeeds on port: " + URL + Colors.RESET.getColor() + "\n");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -52,7 +52,7 @@ public class MyJDBCConnection {
     public void dropTable(String tableName) {
         try {
             stmt.executeUpdate("DROP TABLE " + tableName + ";");
-            System.out.println(Colors.RED.getColor() + "Table " + tableName +
+            System.out.println(Colors.RED_BOLD.getColor() + "Table " + tableName +
                     " has been dropped!" + Colors.RESET.getColor());
         } catch (SQLException e) {
             e.printStackTrace();
