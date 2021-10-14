@@ -11,14 +11,14 @@ public class MyJDBCConnection {
 
     private static Statement stmt = null;
 
-//    I made the constructor private to use singleton design pattern
-//    JDBC is made through constructor
+/*   I made the constructor private to use singleton design pattern
+     JDBC is made through constructor */
 
     private MyJDBCConnection() {
         try {
             Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
             stmt = connection.createStatement();
-            System.out.println("Connection succeeds to port: " + URL + "\n");
+            System.out.println("Connection succeeds on port: " + URL + "\n");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -126,7 +126,7 @@ public class MyJDBCConnection {
                 int id = rs.getInt("id");
                 String name = rs.getString("name");
 
-                System.out.println("id: " + id + " name: " + name);
+                System.out.println(tableName + " {\n " + "id: " + id + "\n name: " + name + "\n}");
             }
         } catch (SQLException e) {
             e.printStackTrace();
