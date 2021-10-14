@@ -1,4 +1,5 @@
 import java.sql.*;
+import java.util.List;
 
 public class MyJDBCConnection {
 
@@ -48,7 +49,7 @@ public class MyJDBCConnection {
 
 //    Method for dropping tables
 
-    public void dropTableExample(String tableName) {
+    public void dropTable(String tableName) {
         try {
             stmt.executeUpdate("DROP TABLE " + tableName + ";");
             System.out.println("Table " + tableName + " has been dropped!");
@@ -59,21 +60,21 @@ public class MyJDBCConnection {
 
 //    Method for inserting data into tables
 
-    public void insertIntoTable(String myTableName, String[] dates, String... values) {
+    public void insertIntoTable(String myTableName, List<String> dates, String... values) {
         try {
             StringBuilder myDates = new StringBuilder();
             StringBuilder myValues = new StringBuilder();
 
-            for (int i = 0; i < dates.length; i++) {
-                if (i < dates.length - 1) {
-                    myDates.append(dates[i]).append(", ");
+            for (int i = 0; i < dates.size(); i++) {
+                if (i < dates.size() - 1) {
+                    myDates.append(dates.get(i)).append(", ");
                 } else {
-                    myDates.append(dates[i]);
+                    myDates.append(dates.get(i));
                 }
             }
 
             for (int i = 0; i < values.length; i++) {
-                if (i < dates.length - 1) {
+                if (i < dates.size() - 1) {
                     myValues.append(values[i]).append(", ");
                 } else {
                     myValues.append(values[i]);
@@ -82,14 +83,14 @@ public class MyJDBCConnection {
 
             stmt.executeUpdate("INSERT " + myTableName + "(" + myDates + ") VALUES (" + myValues + ");");
 
-            System.out.println("INSERT INTO " + myTableName + "(" + myDates + ")" + " VALUES(" + myValues + "')");
+            System.out.println("INSERT INTO " + myTableName + "(" + myDates + ")" + " VALUES(" + myValues + ")");
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
     //    Method for updating tables
-    public void updateTableExample(String tableName, int id, String columnName, String newValue) {
+    public void updateTable(String tableName, int id, String columnName, String newValue) {
         try {
             String sql = "UPDATE " + tableName + " SET " + columnName + " = '" + newValue + "'" + " WHERE id = " + id;
 
@@ -104,7 +105,7 @@ public class MyJDBCConnection {
 
 //    Method for deleting data from the given table, by its ID
 
-    public void deleteFromTableExample(String tableName, int id) {
+    public void deleteFromTable(String tableName, int id) {
         try {
             stmt.executeUpdate("DELETE FROM " + tableName + " WHERE ID = " + id + ";");
             System.out.println("Data with id: " + id + " has been deleted from " + tableName + "!");

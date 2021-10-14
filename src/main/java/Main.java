@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 public class Main {
 
     public static void main(String[] args) {
@@ -10,17 +12,16 @@ public class Main {
 
         System.out.println();
 
-        String[] values = {"name", "address", "age"};
         String[] dates = {"'NewDataTest'", "'NewDataTest2'", "25"};
 
 //        Insert dates into existing table
-        jdbcCon.insertIntoTable("MyCustomTable", values, dates);
-        jdbcCon.insertIntoTable("MyCustomTable", values, "'TestData'", "'TestData2'", "26");
+        jdbcCon.insertIntoTable("MyCustomTable", Arrays.asList("name", "address", "age"), dates);
+        jdbcCon.insertIntoTable("MyCustomTable", Arrays.asList("name", "address", "age"), "'TestData'", "'TestData2'", "26");
 
         System.out.println();
 
 //        Update Name from a specific data of the existing table
-        jdbcCon.updateTableExample("MyCustomTable",1, "name", "UpdatedDataTest");
+        jdbcCon.updateTable("MyCustomTable",1, "name", "UpdatedDataTest");
 
         System.out.println();
 
@@ -30,13 +31,23 @@ public class Main {
         System.out.println();
 
 //        Delete dates from the existing table
-        jdbcCon.deleteFromTableExample("MyCustomTable", 1);
-        jdbcCon.deleteFromTableExample("MyCustomTable", 2);
+        jdbcCon.deleteFromTable("MyCustomTable", 1);
+        jdbcCon.deleteFromTable("MyCustomTable", 2);
 
         System.out.println();
 
 //        Drop the existing table
-        jdbcCon.dropTableExample("MyCustomTable");
+        jdbcCon.dropTable("MyCustomTable");
+
+        jdbcCon.createTable("aTable", "name VARCHAR(255) NOT NULL UNIQUE", "info VARCHAR(20)");
+
+        jdbcCon.insertIntoTable("aTable", Arrays.asList("name", "info"), "'aName'", "'someInfo'");
+
+        jdbcCon.selectIdsAndNamesFromTable("aTable");
+
+        jdbcCon.deleteFromTable("aTable", 1);
+
+        jdbcCon.dropTable("aTable");
 
 
     }
