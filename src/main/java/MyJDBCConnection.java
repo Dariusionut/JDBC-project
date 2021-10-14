@@ -18,7 +18,7 @@ public class MyJDBCConnection {
         try {
             Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
             stmt = connection.createStatement();
-            System.out.println("Connection succeeds on port: " + URL + "\n");
+            System.out.println(Colors.GREEN.getColor() + "Connection succeeds on port: " + URL + Colors.RESET.getColor() + "\n");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -41,7 +41,7 @@ public class MyJDBCConnection {
 
             stmt.executeUpdate(sql);
 
-            System.out.println("Table " + tableName + " has been created!");
+            System.out.println(Colors.BLUE.getColor() + "Table " + tableName + " has been created!" + Colors.RESET.getColor());
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -52,7 +52,8 @@ public class MyJDBCConnection {
     public void dropTable(String tableName) {
         try {
             stmt.executeUpdate("DROP TABLE " + tableName + ";");
-            System.out.println("Table " + tableName + " has been dropped!");
+            System.out.println(Colors.RED.getColor() + "Table " + tableName +
+                    " has been dropped!" + Colors.RESET.getColor());
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -83,7 +84,8 @@ public class MyJDBCConnection {
 
             stmt.executeUpdate("INSERT " + myTableName + "(" + myDates + ") VALUES (" + myValues + ");");
 
-            System.out.println("INSERT INTO " + myTableName + "(" + myDates + ")" + " VALUES(" + myValues + ")");
+            System.out.println(Colors.YELLOW.getColor() + "INSERT INTO " + myTableName + "(" + myDates + ")" +
+                    " VALUES(" + myValues + ")" + Colors.RESET.getColor());
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -96,8 +98,8 @@ public class MyJDBCConnection {
 
             stmt.executeUpdate(sql);
 
-            System.out.println(columnName.substring(0, 1).toUpperCase() + columnName.substring(1) +
-                    " updated to: " + newValue + ", from " + tableName + " where id = " + id);
+            System.out.println(Colors.CYAN.getColor() + columnName.substring(0, 1).toUpperCase() + columnName.substring(1) +
+                    " updated to: " + newValue + ", from " + tableName + " where id = " + id + Colors.RESET.getColor());
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -108,7 +110,8 @@ public class MyJDBCConnection {
     public void deleteFromTable(String tableName, int id) {
         try {
             stmt.executeUpdate("DELETE FROM " + tableName + " WHERE ID = " + id + ";");
-            System.out.println("Data with id: " + id + " has been deleted from " + tableName + "!");
+            System.out.println(Colors.PURPLE.getColor() + "Data with id: " + id + " has been deleted from " +
+                    tableName + "!" + Colors.RESET.getColor());
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -126,7 +129,8 @@ public class MyJDBCConnection {
                 int id = rs.getInt("id");
                 String name = rs.getString("name");
 
-                System.out.println(tableName + " {\n " + "id: " + id + "\n name: " + name + "\n}");
+                System.out.println(Colors.GREEN.getColor() + tableName + " {\n " + "id: " + id +
+                        "\n name: " + name + "\n}" + Colors.RESET.getColor());
             }
         } catch (SQLException e) {
             e.printStackTrace();

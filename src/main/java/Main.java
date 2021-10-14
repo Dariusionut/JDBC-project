@@ -49,6 +49,8 @@ public class Main {
 
         jdbcCon.dropTable("aTable");
 
+        System.out.println(Colors.GREEN.getColor());
+
 
     }
 }
